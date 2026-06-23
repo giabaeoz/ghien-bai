@@ -142,6 +142,7 @@ function startGame() {
     renderHistory();
 
     showMessage("Đã bắt đầu. Hãy chọn thứ hạng cho từng người chơi.", "success");
+    saveGameData();
 }
 
 function renderRankArea() {
@@ -503,6 +504,7 @@ function calculateRound() {
 
     showMessage("Đã tính điểm. Tổng điểm hợp lệ.", "success");
     roundNumber++;
+    saveGameData();
 }
 
 function addHistory(roundScores) {
@@ -614,4 +616,67 @@ function resetGame() {
 
     messageBox.className = "message-box";
     messageBox.textContent = "";
+    clearSavedGameData();
 }
+function saveGameData() {
+    const gameData = {
+        players: players,
+        scores: scores,
+        roundNumber: roundNumber,
+        betValue: betSelect.value,
+        lowBet: lowBetInput.value,
+        highBet: highBetInput.value,
+        historyHTML: historyList.innerHTML
+    };
+
+    localStorage.setItem("tienLenScoreData", JSON.stringify(gameData));
+}
+
+function loadGameData() {
+    const savedData = localStorage.getItem("tienLenScoreData");
+
+    if (!savedData) {
+        return;
+    }
+
+    const gameData = JSON.parse(savedData);
+
+    players = gameData.players || [];
+    scores = gameData.scores || [0, 0, 0, 0];
+    roundNumber = gameData.roundNumber || 1;
+
+    betSelect.value = gameData.betValue || "3-6";
+    lowBetInput.value = gameData.lowBet || "";
+    highBetInput.value = gameData.highBet || "";
+
+    if (betSelect.value === "custom") {
+        customBetBox.classList.remove("hidden");
+    } else {
+        customBetBox.classList.add("hidden");
+    }
+
+    if (players.length === 4) {
+        setupSection.classList.add("hidden");
+        scoreSection.classList.remove("hidden");
+        gameSection.classList.remove("hidden");
+        historySection.classList.remove("hidden");
+        resetBtn.classList.remove("hidden");
+
+        currentBetText.textContent = `${getBetValues().low} - ${getBetValues().high}`;
+
+        renderRankArea();
+        renderAllSelects();
+        renderScoreBoard();
+        renderActionLists();
+
+        historyList.innerHTML = gameData.historyHTML || `<p class="action-empty">Chưa có bàn nào.</p>`;
+
+        showMessage("Đã khôi phục dữ liệu ván chơi trước đó.", "success");
+    }
+}
+
+function clearSavedGameData() {
+    localStorage.removeItem("tienLenScoreData");
+}
+
+loadGameData();
