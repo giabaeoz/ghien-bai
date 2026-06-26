@@ -2,21 +2,25 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiến Lên Score</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Tiến Lên Score — Ứng dụng tính điểm Tiến Lên miền Nam nhanh, chính xác. Giao diện Cyberpunk Casino đẹp mắt.">
+    <meta name="theme-color" content="#050510">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>♠ Tiến Lên Score — Cyberpunk Casino</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <main class="app">
     <header class="header">
         <h1>♠️ Tiến Lên Score ♥️</h1>
         <p>Tính điểm nhanh, chuẩn xác, không lo nhầm lẫn</p>
     </header>
-
     <section class="card" id="setupSection">
         <h2 class="card-title">♦️ Thiết lập bàn chơi ♣️</h2>
-
         <div class="form-group">
             <label>Mức cược</label>
             <select id="betSelect">
@@ -28,7 +32,6 @@
                 <option value="custom">Tùy chỉnh</option>
             </select>
         </div>
-
         <div id="customBetBox" class="custom-bet-box hidden">
             <div class="form-group">
                 <label>Điểm thấp</label>
@@ -39,7 +42,6 @@
                 <input type="number" id="highBetInput" placeholder="Ví dụ: 10">
             </div>
         </div>
-
         <div class="input-grid">
             <div class="form-group">
                 <label>Phạt Tới trắng</label>
@@ -56,7 +58,6 @@
                 </select>
             </div>
         </div>
-
         <div class="player-inputs">
             <div class="form-group">
                 <label>Người chơi 1</label>
@@ -75,22 +76,18 @@
                 <input type="text" id="player4" placeholder="Tên người chơi 4">
             </div>
         </div>
-
         <button id="startBtn" class="btn main-btn">Vào Bàn</button>
     </section>
-
     <section class="card hidden" id="scoreSection">
         <div class="score-title">
             <h2 class="card-title">Bảng Tổng Điểm</h2>
             <span id="currentBetText" class="bet-badge"></span>
         </div>
-
         <div id="scoreBoard" class="score-board"></div>
         
         <div class="total-score">
             Quỹ bàn (Check lỗi): <span id="totalScoreText">0</span>
         </div>
-
         <details class="extra-box">
             <summary>⚙️ Điều chỉnh điểm thủ công</summary>
             <div class="extra-content input-grid" style="align-items: end;">
@@ -106,16 +103,12 @@
             </div>
         </details>
     </section>
-
     <section class="card hidden" id="gameSection">
         <h2 class="card-title">Bàn hiện tại</h2>
         <p class="hint">Chọn kết quả cho từng người chơi:</p>
-
         <div id="rankArea" class="rank-area"></div>
-
         <details class="extra-box">
             <summary>🔥 Tùy chọn chặt chém</summary>
-
             <details class="mini-box">
                 <summary>🗡️ Chặt heo</summary>
                 <div class="extra-content">
@@ -138,7 +131,6 @@
                     <div id="pigList" class="action-list"></div>
                 </div>
             </details>
-
             <details class="mini-box">
                 <summary>💩 Thúi heo (chết ngộp)</summary>
                 <div class="extra-content">
@@ -170,7 +162,6 @@
                     <div id="rottenPigList" class="action-list"></div>
                 </div>
             </details>
-
             <details class="mini-box">
                 <summary>⚡ Chặt chồng</summary>
                 <div class="extra-content">
@@ -194,23 +185,18 @@
                 </div>
             </details>
         </details>
-
         <div class="main-actions">
             <button id="calculateBtn" class="btn main-btn">✅ Chốt Bàn Này</button>
             <button id="clearRoundBtn" class="btn light-btn">🔄 Xóa làm lại</button>
         </div>
-
         <div id="messageBox" class="message-box"></div>
     </section>
-
     <section class="card hidden" id="historySection">
         <h2 class="card-title">📜 Lịch sử các ván</h2>
         <div id="historyList"></div>
     </section>
-
     <button id="resetBtn" class="btn danger-btn hidden">⚠️ Kết thúc ván - Chơi lại từ đầu</button>
 </main>
-
 <script src="script.js"></script>
 </body>
 </html>
