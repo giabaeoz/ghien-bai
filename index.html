@@ -89,17 +89,51 @@
             Quỹ bàn (Check lỗi): <span id="totalScoreText">0</span>
         </div>
         <details class="extra-box">
-            <summary>⚙️ Điều chỉnh điểm thủ công</summary>
-            <div class="extra-content input-grid" style="align-items: end;">
-                <div class="form-group">
-                    <label>Người chơi</label>
-                    <select id="manualPlayerSelect"></select>
+            <summary>⚙️ Điều chỉnh thông số & điểm</summary>
+            <div class="extra-content">
+                <div class="bet-changer" style="margin-top: 0; border-top: none; padding-top: 0;">
+                    <div class="bet-changer-title">💰 Thay đổi mức cược</div>
+                    <div class="bet-changer-grid">
+                        <div class="form-group">
+                            <select id="ingameBetSelect">
+                                <option value="3-6">3 - 6</option>
+                                <option value="4-8">4 - 8</option>
+                                <option value="5-10">5 - 10</option>
+                                <option value="10-20">10 - 20</option>
+                                <option value="20-40">20 - 40</option>
+                                <option value="custom">Tùy chỉnh</option>
+                            </select>
+                        </div>
+                        <button id="ingameBetApplyBtn" class="bet-change-btn">Áp dụng</button>
+                    </div>
+                    <div id="ingameCustomBetBox" class="custom-bet-box hidden" style="margin-top: 8px;">
+                        <div class="input-grid">
+                            <div class="form-group">
+                                <label>Điểm thấp</label>
+                                <input type="number" id="ingameLowBet" placeholder="Ví dụ: 5">
+                            </div>
+                            <div class="form-group">
+                                <label>Điểm cao</label>
+                                <input type="number" id="ingameHighBet" placeholder="Ví dụ: 10">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Số điểm (vd: 5 hoặc -5)</label>
-                    <input type="number" id="manualPointInput" placeholder="Nhập điểm">
+                
+                <hr style="border-color: rgba(255,255,255,0.06); margin: 15px 0;">
+                
+                <div class="bet-changer-title" style="margin-bottom: 8px;">🔢 Cộng/Trừ điểm thủ công</div>
+                <div class="input-grid" style="align-items: end;">
+                    <div class="form-group">
+                        <label>Người chơi</label>
+                        <select id="manualPlayerSelect"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Số điểm (+ hoặc -)</label>
+                        <input type="number" id="manualPointInput" placeholder="VD: 5 hoặc -5">
+                    </div>
+                    <button id="manualAdjustBtn" class="btn warning-btn" style="grid-column: span 2;">Cập nhật điểm</button>
                 </div>
-                <button id="manualAdjustBtn" class="btn warning-btn">Cập nhật</button>
             </div>
         </details>
     </section>
@@ -191,10 +225,12 @@
         </div>
         <div id="messageBox" class="message-box"></div>
     </section>
-    <section class="card hidden" id="historySection">
-        <h2 class="card-title">📜 Lịch sử các ván</h2>
-        <div id="historyList"></div>
-    </section>
+    <details class="card hidden" id="historySection">
+        <summary class="card-title" style="list-style: none; margin-bottom: 0; cursor: pointer; padding-bottom: 0; border-bottom: none;">📜 Lịch sử các ván (Nhấn để xem) ▼</summary>
+        <div style="margin-top: 18px; border-top: 1px solid rgba(var(--cyan-rgb), 0.12); padding-top: 18px;">
+            <div id="historyList"></div>
+        </div>
+    </details>
     <button id="resetBtn" class="btn danger-btn hidden">⚠️ Kết thúc ván - Chơi lại từ đầu</button>
 </main>
 <script src="script.js"></script>

@@ -5,7 +5,9 @@ let pigActions = [];
 let rottenPigActions = [];
 let stackActions = [];
 let roundNumber = 1;
-let toiTrangPlayer = null; 
+let toiTrangPlayer = null;
+let historyData = []; // Lưu dữ liệu lịch sử để render lại
+let isGameStarted = false;
 
 const betSelect = document.getElementById("betSelect");
 const customBetBox = document.getElementById("customBetBox");
@@ -67,6 +69,23 @@ addRottenPigBtn.addEventListener("click", addRottenPigAction);
 addStackBtn.addEventListener("click", addStackAction);
 manualAdjustBtn.addEventListener("click", manualAdjustScore);
 
+// In-game bet changer
+const ingameBetSelect = document.getElementById("ingameBetSelect");
+const ingameCustomBetBox = document.getElementById("ingameCustomBetBox");
+const ingameLowBet = document.getElementById("ingameLowBet");
+const ingameHighBet = document.getElementById("ingameHighBet");
+const ingameBetApplyBtn = document.getElementById("ingameBetApplyBtn");
+
+ingameBetSelect.addEventListener("change", () => {
+    if (ingameBetSelect.value === "custom") {
+        ingameCustomBetBox.classList.remove("hidden");
+    } else {
+        ingameCustomBetBox.classList.add("hidden");
+    }
+});
+
+ingameBetApplyBtn.addEventListener("click", applyIngameBet);
+
 function toggleCustomBetBox() {
     if (betSelect.value === "custom") {
         customBetBox.classList.remove("hidden");
@@ -76,6 +95,20 @@ function toggleCustomBetBox() {
 }
 
 function getBetValues() {
+    // Khi đang chơi, ưu tiên lấy từ in-game bet nếu đã set
+    if (isGameStarted) {
+        if (ingameBetSelect.value === "custom") {
+            return {
+                low: Number(ingameLowBet.value),
+                high: Number(ingameHighBet.value)
+            };
+        }
+        const parts = ingameBetSelect.value.split("-");
+        return {
+            low: Number(parts[0]),
+            high: Number(parts[1])
+        };
+    }
     if (betSelect.value === "custom") {
         return {
             low: Number(lowBetInput.value),
@@ -87,6 +120,30 @@ function getBetValues() {
         low: Number(parts[0]),
         high: Number(parts[1])
     };
+}
+
+function applyIngameBet() {
+    const newBet = getBetValues();
+    if (newBet.low <= 0 || newBet.high <= 0 || isNaN(newBet.low) || isNaN(newBet.high)) {
+        showMessage("Vui lòng nhập mức cược hợp lệ.", "error");
+        return;
+    }
+    if (newBet.high <= newBet.low) {
+        showMessage("Điểm cao phải lớn hơn điểm thấp.", "error");
+        return;
+    }
+    // Sync lại betSelect gốc
+    betSelect.value = ingameBetSelect.value;
+    if (ingameBetSelect.value === "custom") {
+        lowBetInput.value = ingameLowBet.value;
+        highBetInput.value = ingameHighBet.value;
+        customBetBox.classList.remove("hidden");
+    } else {
+        customBetBox.classList.add("hidden");
+    }
+    currentBetText.textContent = `Mức cược: ${newBet.low} - ${newBet.high}`;
+    showMessage(`Đã đổi mức cược thành ${newBet.low} - ${newBet.high}!`, "success");
+    saveGameData();
 }
 
 function getSpecialPoint(type) {
@@ -133,6 +190,18 @@ function startGame() {
     stackActions = [];
     toiTrangPlayer = null;
     roundNumber = 1;
+    historyData = [];
+    isGameStarted = true;
+
+    // Sync in-game bet với setup bet
+    ingameBetSelect.value = betSelect.value;
+    if (betSelect.value === "custom") {
+        ingameLowBet.value = lowBetInput.value;
+        ingameHighBet.value = highBetInput.value;
+        ingameCustomBetBox.classList.remove("hidden");
+    } else {
+        ingameCustomBetBox.classList.add("hidden");
+    }
 
     currentBetText.textContent = `Mức cược: ${bet.low} - ${bet.high}`;
 
@@ -500,7 +569,7 @@ function calculateRound() {
 
     scores = scores.map((score, index) => score + roundScores[index]);
 
-    addHistory(roundScores, rankText, `Bàn ${roundNumber}`);
+    addHistory(roundScores, rankText, `Bàn ${roundNumber}`, `${bet.low} - ${bet.high}`);
     renderScoreBoard();
     clearCurrentRound(false);
 
@@ -525,7 +594,7 @@ function manualAdjustScore() {
     const fakeRoundScores = [0, 0, 0, 0];
     fakeRoundScores[pIdx] = val;
 
-    addHistory(fakeRoundScores, "Thao tác sửa lỗi", "⚙️ Sửa điểm nhanh");
+    addHistory(fakeRoundScores, "Thao tác sửa lỗi", "⚙️ Sửa điểm nhanh", "");
     
     renderScoreBoard();
     manualPointInput.value = "";
@@ -533,34 +602,118 @@ function manualAdjustScore() {
     showMessage(`Đã cập nhật ${val > 0 ? '+'+val : val} điểm cho ${players[pIdx]}.`, "success");
 }
 
-function addHistory(roundScores, detailText, title) {
-    let scoreRows = "";
-    players.forEach((player, index) => {
-        const point = roundScores[index];
-        if (point !== 0) {
-            const colorClass = point > 0 ? "text-win" : "text-lose";
-            const sign = point > 0 ? "+" : "";
+function addHistory(roundScores, detailText, title, betInfo) {
+    // Lưu dữ liệu lịch sử
+    const cumulativeScores = [...scores];
+    historyData.unshift({
+        roundScores: [...roundScores],
+        detailText,
+        title,
+        betInfo,
+        cumulativeScores
+    });
+
+    renderHistoryFromData();
+}
+
+function renderHistoryFromData() {
+    historyList.innerHTML = "";
+    if (historyData.length === 0) {
+        historyList.innerHTML = `<p class="action-empty">Chưa có dữ liệu ván chơi.</p>`;
+        return;
+    }
+
+    historyData.forEach((entry, histIndex) => {
+        const { roundScores, detailText, title, betInfo, cumulativeScores } = entry;
+
+        // Tạo điểm từng người chơi trong ván (hiện tất cả 4 người)
+        let scoreRows = "";
+        players.forEach((player, index) => {
+            const point = roundScores[index];
+            let colorClass = "text-neutral";
+            let sign = "";
+            if (point > 0) { colorClass = "text-win"; sign = "+"; }
+            else if (point < 0) { colorClass = "text-lose"; }
             scoreRows += `
                 <div class="history-score-row">
-                    <span>${player}</span> 
+                    <span>${player}</span>
                     <strong class="${colorClass}">${sign}${point}</strong>
                 </div>
             `;
-        }
+        });
+
+        // Tổng điểm tích lũy tại thời điểm ván đó
+        let cumRows = "";
+        players.forEach((player, index) => {
+            const cumPoint = cumulativeScores[index];
+            let cumColor = "text-neutral";
+            if (cumPoint > 0) cumColor = "text-win";
+            else if (cumPoint < 0) cumColor = "text-lose";
+            cumRows += `
+                <div class="history-cum-item">
+                    <span class="cum-name">${player}</span>
+                    <span class="cum-point ${cumColor}">${cumPoint}</span>
+                </div>
+            `;
+        });
+
+        // Tính tổng round
+        const roundTotal = roundScores.reduce((s, p) => s + p, 0);
+
+        const betLine = betInfo ? `<div class="history-bet-info">Mức cược: ${betInfo}</div>` : "";
+
+        const item = document.createElement("div");
+        item.className = "history-item";
+        item.innerHTML = `
+            <div class="history-header">
+                <span>${title}</span>
+                <div class="history-header-actions">
+                    <span class="history-round-total">Σ ${roundTotal === 0 ? "✓" : roundTotal}</span>
+                    <button class="history-delete-btn" onclick="deleteHistoryRound(${histIndex})" title="Xóa bàn này">✕</button>
+                </div>
+            </div>
+            <div class="history-detail">${detailText}${betLine}</div>
+            <div class="history-scores">${scoreRows}</div>
+            <div class="history-cumulative">
+                ${cumRows}
+            </div>
+        `;
+
+        historyList.appendChild(item);
+    });
+}
+
+function deleteHistoryRound(histIndex) {
+    const entry = historyData[histIndex];
+    if (!confirm(`Xóa "${entry.title}"? Điểm sẽ được tính lại.`)) return;
+
+    // Trừ điểm ván bị xóa khỏi tổng
+    entry.roundScores.forEach((point, i) => {
+        scores[i] -= point;
     });
 
-    const item = document.createElement("div");
-    item.className = "history-item";
-    item.innerHTML = `
-        <div class="history-header">
-            <span>${title}</span>
-        </div>
-        <div class="history-detail">${detailText}</div>
-        <div class="history-scores">${scoreRows}</div>
-    `;
+    // Xóa ván khỏi lịch sử
+    historyData.splice(histIndex, 1);
 
-    if (historyList.querySelector(".action-empty")) historyList.innerHTML = "";
-    historyList.prepend(item);
+    // Tính lại tổng điểm tích lũy cho tất cả ván còn lại
+    recalculateCumulativeScores();
+
+    renderScoreBoard();
+    renderHistoryFromData();
+    saveGameData();
+    showMessage(`Đã xóa bàn và tính lại điểm.`, "warning");
+}
+
+function recalculateCumulativeScores() {
+    // historyData được lưu theo thứ tự mới nhất trước (unshift)
+    // Tính lại từ cuối lên đầu
+    const tempScores = [0, 0, 0, 0];
+    for (let i = historyData.length - 1; i >= 0; i--) {
+        historyData[i].roundScores.forEach((point, pIdx) => {
+            tempScores[pIdx] += point;
+        });
+        historyData[i].cumulativeScores = [...tempScores];
+    }
 }
 
 function renderActionLists() {
@@ -570,7 +723,11 @@ function renderActionLists() {
 }
 
 function renderHistory() {
-    historyList.innerHTML = `<p class="action-empty">Chưa có dữ liệu ván chơi.</p>`;
+    if (historyData.length > 0) {
+        renderHistoryFromData();
+    } else {
+        historyList.innerHTML = `<p class="action-empty">Chưa có dữ liệu ván chơi.</p>`;
+    }
 }
 
 function clearCurrentRound(showNotify = true) {
@@ -611,6 +768,8 @@ function resetGame() {
     stackActions = [];
     toiTrangPlayer = null;
     roundNumber = 1;
+    historyData = [];
+    isGameStarted = false;
 
     setupSection.classList.remove("hidden");
     scoreSection.classList.add("hidden");
@@ -630,6 +789,12 @@ function resetGame() {
     gietMultiplierSelect.value = "2";
     customBetBox.classList.add("hidden");
 
+    // Reset in-game bet
+    ingameBetSelect.value = "3-6";
+    ingameLowBet.value = "";
+    ingameHighBet.value = "";
+    ingameCustomBetBox.classList.add("hidden");
+
     messageBox.className = "message-box";
     messageBox.textContent = "";
     clearSavedGameData();
@@ -644,8 +809,11 @@ function saveGameData() {
         lowBet: lowBetInput.value,
         highBet: highBetInput.value,
         toiTrangMultiplierValue: toiTrangMultiplierSelect.value,
-        gietMultiplierValue: gietMultiplierSelect.value, 
-        historyHTML: historyList.innerHTML
+        gietMultiplierValue: gietMultiplierSelect.value,
+        historyData: historyData,
+        ingameBetValue: ingameBetSelect.value,
+        ingameLowBetVal: ingameLowBet.value,
+        ingameHighBetVal: ingameHighBet.value
     };
     localStorage.setItem("tienLenScoreData", JSON.stringify(gameData));
 }
@@ -658,6 +826,7 @@ function loadGameData() {
     players = gameData.players || [];
     scores = gameData.scores || [0, 0, 0, 0];
     roundNumber = gameData.roundNumber || 1;
+    historyData = gameData.historyData || [];
 
     betSelect.value = gameData.betValue || "3-6";
     lowBetInput.value = gameData.lowBet || "";
@@ -668,7 +837,15 @@ function loadGameData() {
     if (betSelect.value === "custom") customBetBox.classList.remove("hidden");
     else customBetBox.classList.add("hidden");
 
+    // Restore in-game bet
+    ingameBetSelect.value = gameData.ingameBetValue || gameData.betValue || "3-6";
+    ingameLowBet.value = gameData.ingameLowBetVal || "";
+    ingameHighBet.value = gameData.ingameHighBetVal || "";
+    if (ingameBetSelect.value === "custom") ingameCustomBetBox.classList.remove("hidden");
+    else ingameCustomBetBox.classList.add("hidden");
+
     if (players.length === 4) {
+        isGameStarted = true;
         setupSection.classList.add("hidden");
         scoreSection.classList.remove("hidden");
         gameSection.classList.remove("hidden");
@@ -680,7 +857,7 @@ function loadGameData() {
         renderAllSelects();
         renderScoreBoard();
         renderActionLists();
-        historyList.innerHTML = gameData.historyHTML || `<p class="action-empty">Chưa có dữ liệu ván chơi.</p>`;
+        renderHistory();
         showMessage("Khôi phục bàn chơi dang dở thành công!", "success");
     }
 }
