@@ -1,3 +1,7 @@
+/* ========================================================
+   THEME: NEON CASINO (DARK MODE + GLASSMORPHISM)
+   ======================================================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -5,389 +9,499 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #eef4ef;
-    color: #222;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Ảnh nền được đặt trong thư mục images */
+    background-image: url('images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: #050505; /* Màu nền dự phòng */
+    color: #e0e0e0; /* Chữ xám sáng để dịu mắt trên nền đen */
+    padding-bottom: 40px;
+    min-height: 100vh;
 }
 
 .app {
-    max-width: 620px;
+    max-width: 600px; /* Tối ưu cho kích thước điện thoại */
     margin: 0 auto;
-    padding: 14px;
+    padding: 12px;
 }
 
+/* --- HEADER --- */
 .header {
-    background: linear-gradient(135deg, #116530, #198754);
-    color: white;
-    padding: 24px 16px;
     text-align: center;
-    border-radius: 0 0 24px 24px;
-    margin: -14px -14px 16px -14px;
+    color: #fff;
+    padding: 15px 10px 25px 10px;
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); /* Sáng bóng viền chữ */
 }
 
 .header h1 {
     font-size: 28px;
-    margin-bottom: 6px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+    color: #ffffff;
 }
 
 .header p {
-    font-size: 14px;
-    opacity: 0.95;
+    font-size: 13px;
+    color: #aaa;
+    text-shadow: none;
 }
 
-.card,
-.score-card {
-    background: white;
-    border-radius: 18px;
-    padding: 16px;
-    margin-bottom: 14px;
-    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.08);
+/* --- GLASSMORPHISM CARDS (Các khối giao diện) --- */
+.card, .score-card {
+    background: rgba(10, 10, 12, 0.75); /* Đen bán trong suốt */
+    backdrop-filter: blur(12px); /* Hiệu ứng kính mờ che ảnh nền */
+    -webkit-backdrop-filter: blur(12px); /* Hỗ trợ Safari (iOS) */
+    border: 1px solid rgba(0, 243, 255, 0.15); /* Viền mỏng màu neon xanh */
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
 }
 
-h2 {
-    font-size: 20px;
-    color: #116530;
-    margin-bottom: 14px;
-}
-
-h3 {
-    font-size: 16px;
-    color: #116530;
-    margin-bottom: 10px;
+.card-title {
+    font-size: 18px;
+    color: #00f3ff; /* Màu Neon Xanh */
+    margin-bottom: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+    padding-bottom: 10px;
+    text-shadow: 0 0 8px rgba(0, 243, 255, 0.3);
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
+/* --- FORM TÙY CHỈNH CHUẨN DARK MODE --- */
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    width: 100%;
 }
 
 label {
-    font-size: 14px;
-    font-weight: bold;
-    color: #444;
+    font-size: 13px;
+    font-weight: 700;
+    color: #bbb;
 }
 
-input,
-select {
+input, select {
     width: 100%;
     padding: 12px;
-    border: 1px solid #d5d5d5;
-    border-radius: 12px;
-    font-size: 16px;
-    background: white;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    font-size: 15px;
+    background: rgba(0, 0, 0, 0.6); /* Ô nhập liệu màu đen trong */
+    color: #fff;
     outline: none;
+    transition: all 0.3s ease;
 }
 
-input:focus,
-select:focus {
-    border-color: #198754;
+/* Hỗ trợ màu nền cho các tùy chọn trong select (Drop-down menu) */
+option {
+    background-color: #111;
+    color: #fff;
+}
+
+input:focus, select:focus {
+    border-color: #00f3ff;
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+}
+
+input::placeholder {
+    color: #666;
+}
+
+.input-grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
 }
 
 .player-inputs {
     display: grid;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
-.custom-bet-box {
-    background: #f8f9fa;
-    border-radius: 14px;
-    padding: 12px;
-    margin-bottom: 12px;
-}
-
+/* --- HỆ THỐNG NÚT BẤM (BUTTONS) --- */
 .btn {
     width: 100%;
     border: none;
-    border-radius: 14px;
-    padding: 13px;
+    border-radius: 10px;
+    padding: 14px;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 800;
     cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
+.btn:active {
+    transform: scale(0.96);
+}
+
+/* Nút chính (Bắt đầu, Tính điểm) - Neon Xanh */
 .main-btn {
-    background: #198754;
-    color: white;
+    background: rgba(0, 243, 255, 0.1);
+    color: #00f3ff;
+    border: 1px solid #00f3ff;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
 }
 
-.blue-btn {
-    background: #0d6efd;
-    color: white;
-    margin-top: 4px;
+.main-btn:active {
+    background: #00f3ff;
+    color: #000;
 }
 
+/* Nút tùy chọn thêm - Xanh dương đậm */
+.action-btn {
+    background: rgba(13, 110, 253, 0.2);
+    color: #66b2ff;
+    border: 1px solid #0d6efd;
+    padding: 12px;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+/* Nút xóa bàn - Xám nhạt */
 .light-btn {
-    background: #e9ecef;
-    color: #333;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ccc;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* Nút tùy chỉnh - Vàng */
+.warning-btn {
+    background: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+    border: 1px solid #ffc107;
+    padding: 12px;
+}
+
+/* Nút xóa/chơi lại - Neon Đỏ */
 .danger-btn {
-    background: #dc3545;
-    color: white;
-    margin-bottom: 24px;
+    background: rgba(255, 0, 60, 0.1);
+    color: #ff003c;
+    border: 1px solid #ff003c;
+    margin-top: 10px;
+    box-shadow: 0 0 15px rgba(255, 0, 60, 0.2);
 }
 
+/* --- BẢNG ĐIỂM (SCOREBOARD) --- */
 .score-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
+    margin-bottom: 16px;
 }
 
-.score-title span {
-    background: #e8f5ee;
-    color: #116530;
-    font-weight: bold;
-    padding: 7px 12px;
-    border-radius: 999px;
-    font-size: 14px;
-    white-space: nowrap;
+.score-title .card-title {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.bet-badge {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffd700;
+    border: 1px solid #ffd700;
+    font-weight: 800;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
 }
 
 .score-board {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
 }
 
 .player-score {
-    background: #f8f9fa;
-    border-radius: 14px;
-    padding: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    padding: 16px 10px;
     text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .player-score .name {
-    font-weight: bold;
+    font-weight: 700;
     font-size: 14px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    color: #aaa;
 }
 
 .player-score .point {
-    font-size: 26px;
-    font-weight: bold;
-    color: #198754;
+    font-size: 28px;
+    font-weight: 900;
+    text-shadow: 0 0 10px currentColor; /* Viền sáng cùng màu chữ */
 }
+
+/* Hiệu ứng màu điểm Neon */
+.text-win { color: #00f3ff; } /* Dương: Neon Xanh */
+.text-lose { color: #ff003c; } /* Âm: Neon Đỏ */
+.text-neutral { color: #888; }
 
 .total-score {
-    text-align: right;
+    text-align: center;
+    font-size: 12px;
     font-weight: bold;
-    color: #116530;
-    margin-top: 12px;
+    color: #666;
+    margin-top: 16px;
     padding-top: 10px;
-    border-top: 1px solid #eee;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
 }
 
+/* --- KHU VỰC CHỌN THỨ HẠNG --- */
 .hint {
-    color: #666;
-    font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 12px;
+    color: #888;
+    font-size: 13px;
+    text-align: center;
+    margin-bottom: 16px;
 }
 
 .rank-area {
     display: grid;
-    gap: 10px;
+    gap: 12px;
 }
 
 .player-card {
-    background: #f8f9fa;
-    border-radius: 16px;
-    padding: 13px;
-    border: 1px solid #eeeeee;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .player-name {
-    font-weight: bold;
-    font-size: 16px;
+    font-weight: 800;
+    font-size: 15px;
     margin-bottom: 10px;
-    color: #222;
+    color: #fff;
+    text-align: center;
 }
 
+/* Đổi lại thành 2 cột cho các nút hạng */
 .rank-buttons {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 7px;
-}
-
-.rank-btn {
-    border: 1px solid #198754;
-    background: white;
-    color: #198754;
-    border-radius: 11px;
-    padding: 10px 4px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.rank-btn.active {
-    background: #198754;
-    color: white;
-}
-
-.extra-box {
-    margin-top: 14px;
-    border: 1px solid #dcdcdc;
-    border-radius: 16px;
-    overflow: hidden;
-    background: #f8f9fa;
-}
-
-.extra-box > summary {
-    padding: 14px;
-    font-weight: bold;
-    color: #116530;
-    cursor: pointer;
-    list-style: none;
-}
-
-.extra-box > summary::after {
-    content: " +";
-    float: right;
-}
-
-.extra-box[open] > summary::after {
-    content: " -";
-}
-
-.mini-box {
-    border-top: 1px solid #e2e2e2;
-    background: white;
-}
-
-.mini-box summary {
-    padding: 13px 14px;
-    font-weight: bold;
-    cursor: pointer;
-    list-style: none;
-    color: #333;
-}
-
-.mini-box summary::after {
-    content: " +";
-    float: right;
-    color: #198754;
-}
-
-.mini-box[open] summary::after {
-    content: " -";
-}
-
-.extra-content {
-    padding: 0 14px 14px 14px;
-}
-
-.input-grid {
-    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
     gap: 8px;
 }
 
-.action-list {
-    margin-top: 10px;
+.rank-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #999;
+    border-radius: 8px;
+    padding: 10px 4px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.action-empty {
-    color: #777;
-    font-size: 14px;
+/* Nút Tới trắng choán hết 2 cột nhìn sẽ cân đối hơn */
+.toi-trang-btn {
+    grid-column: span 2;
+    border-color: rgba(255, 193, 7, 0.3);
+    color: rgba(255, 193, 7, 0.6);
 }
 
-.action-item {
-    background: #fff3cd;
+/* Style cho từng nút chọn hạng lúc chưa bấm */
+.rank-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #999;
+    border-radius: 8px;
+    padding: 12px 4px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Nhất, Nhì, Ba, Bét (Neon Xanh) */
+.rank-btn.active {
+    background: rgba(0, 243, 255, 0.15);
+    color: #00f3ff;
+    border-color: #00f3ff;
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+}
+
+/* Bị Giết (Neon Đỏ) */
+.bi-giet-btn.active {
+    background: rgba(255, 0, 60, 0.15);
+    color: #ff003c;
+    border-color: #ff003c;
+    box-shadow: 0 0 10px rgba(255, 0, 60, 0.4);
+}
+
+/* Hòa (Xám) */
+.hoa-btn.active {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border-color: #fff;
+}
+
+/* Tới trắng (Vàng) */
+.toi-trang-btn {
+    grid-column: span 3;
+    border-color: rgba(255, 193, 7, 0.3);
+    color: rgba(255, 193, 7, 0.6);
+}
+.toi-trang-btn.active-gold {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffd700;
+    border-color: #ffd700;
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.4);
+}
+
+/* --- TÙY CHỌN CỘNG THÊM (CHẶT CHÉM) --- */
+.extra-box {
+    margin-top: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    padding: 10px;
+    overflow: hidden;
+}
+
+.extra-box > summary {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 14px;
+    font-weight: 800;
+    color: #00f3ff;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
     font-size: 14px;
-    line-height: 1.5;
+}
+.extra-box > summary::after { content: " ▼"; float: right; font-size: 12px; color: #fff;}
+.extra-box[open] > summary::after { content: " ▲"; }
+
+.mini-box {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.3);
+}
+.mini-box summary {
+    padding: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+    color: #ddd;
+    font-size: 14px;
+}
+.mini-box summary::after { content: " +"; float: right; color: #888; }
+.mini-box[open] summary::after { content: " -"; }
+
+.extra-content {
+    padding: 10px 14px 14px 14px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.action-list { margin-top: 12px; }
+.action-empty { color: #666; font-size: 13px; font-style: italic; }
+.action-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 13px;
     margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ccc;
+}
+.action-item strong {
+    color: #fff;
 }
 
 .remove-btn {
-    margin-top: 8px;
     border: none;
-    background: #dc3545;
-    color: white;
-    padding: 7px 10px;
-    border-radius: 8px;
+    background: rgba(255, 0, 60, 0.2);
+    color: #ff003c;
+    border: 1px solid #ff003c;
+    padding: 6px 12px;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .main-actions {
     display: grid;
-    gap: 10px;
-    margin-top: 14px;
+    gap: 12px;
+    margin-top: 20px;
 }
 
+/* --- MESSAGES (THÔNG BÁO) --- */
 .message-box {
     display: none;
     padding: 12px;
-    border-radius: 12px;
-    margin-top: 12px;
-    font-size: 14px;
+    border-radius: 8px;
+    margin-top: 16px;
+    font-size: 13px;
     font-weight: bold;
+    text-align: center;
 }
+.message-success { display: block; background: rgba(0, 243, 255, 0.15); color: #00f3ff; border: 1px solid #00f3ff; }
+.message-error { display: block; background: rgba(255, 0, 60, 0.15); color: #ff003c; border: 1px solid #ff003c; }
+.message-warning { display: block; background: rgba(255, 193, 7, 0.15); color: #ffd700; border: 1px solid #ffd700; }
 
-.message-success {
-    display: block;
-    background: #d1e7dd;
-    color: #0f5132;
-}
-
-.message-error {
-    display: block;
-    background: #f8d7da;
-    color: #842029;
-}
-
-.message-warning {
-    display: block;
-    background: #fff3cd;
-    color: #664d03;
-}
-
+/* --- LỊCH SỬ THIẾT KẾ ĐẬM CHẤT NEON --- */
 .history-item {
-    background: #f8f9fa;
-    border-left: 5px solid #198754;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 243, 255, 0.15);
     border-radius: 12px;
-    padding: 12px;
-    font-size: 14px;
-    line-height: 1.6;
+    padding: 14px;
+    margin-bottom: 12px;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 800;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+    color: #00f3ff; /* Tiêu đề màu neon xanh */
+}
+
+.history-detail {
+    font-size: 13px;
+    color: #aaa;
     margin-bottom: 10px;
 }
 
-@media (min-width: 650px) {
-    .app {
-        padding: 22px;
-    }
+.history-scores {
+    display: grid;
+    gap: 6px;
+}
 
-    .header {
-        margin: 0 0 16px 0;
-        border-radius: 24px;
-    }
+.history-score-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+}
 
-    .player-inputs {
-        grid-template-columns: 1fr 1fr;
-    }
+.history-score-row span { font-weight: 600; color: #ddd; }
+.history-score-row strong { font-weight: 800; text-shadow: 0 0 8px currentColor;}
 
-    .score-board {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    .rank-area {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .input-grid {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-
-    .main-actions {
-        grid-template-columns: 1fr 1fr;
+/* Responsive cho màn hình nhỉnh hơn (Tablet dọc) */
+@media (min-width: 500px) {
+    .input-grid, .player-inputs, .main-actions {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
