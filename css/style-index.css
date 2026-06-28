@@ -1,239 +1,169 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-/* ========================================================
-   THEME: PREMIUM GLASSMORPHISM & GRADIENTS
-   ======================================================== */
-
-/* =========================================================
-   CSS CUSTOM PROPERTIES â€” LIGHT MODE (Default)
-   ========================================================= */
-:root {
-    /* === Premium Accent Colors === */
-    --blue: #2563eb;
-    --blue-rgb: 37, 99, 235;
-    --green: #10b981;
-    --green-rgb: 16, 185, 129;
-    --red: #ef4444;
-    --red-rgb: 239, 68, 68;
-    --yellow: #f59e0b;
-    --yellow-rgb: 245, 158, 11;
-
-    /* === Gradients === */
-    --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    --gradient-success: linear-gradient(135deg, #34d399 0%, #10b981 100%);
-    --gradient-danger: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
-    --gradient-warning: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-
-    /* === Surfaces â€” Light Mode === */
-    --bg-body: #f4f6f9;
-    --bg-card: #ffffff;
-    --bg-input: #f8fafc;
-    --bg-elevated: #ffffff;
-    --bg-hover: rgba(0, 0, 0, 0.04);
-    --bg-glass: rgba(255, 255, 255, 0.85);
-
-    /* === Text â€” Light Mode === */
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --text-muted: #94a3b8;
-    --text-on-primary: #ffffff;
-
-    /* === Borders â€” Light Mode === */
-    --border-subtle: #e2e8f0;
-    --border-default: #cbd5e1;
-    --border-card: #94a3b8;
-    --border-glass: rgba(255, 255, 255, 0.6);
-
-    /* === Shadows â€” Light Mode (Multi-layered) === */
-    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-    --shadow-card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
-    --shadow-elevated: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-    --shadow-nav: 0 -4px 6px -1px rgba(0, 0, 0, 0.05);
-
-    /* === Spacing & Radius === */
-    --radius-xl: 24px;
-    --radius-lg: 16px;
-    --radius-md: 12px;
-    --radius-sm: 8px;
-    --radius-pill: 9999px;
-
-    /* === Motion === */
-    --transition: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    --transition-theme: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    --bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-
-    /* === Navigation === */
-    --nav-height: 64px;
-}
-
-/* =========================================================
-   CSS CUSTOM PROPERTIES â€” DARK MODE
-   ========================================================= */
-[data-theme="dark"] {
-    --bg-body: #000000;
-    --bg-card: rgba(20, 20, 20, 0.7);
-    --bg-input: rgba(30, 30, 30, 0.6);
-    --bg-elevated: rgba(26, 26, 26, 0.9);
-    --bg-hover: rgba(255, 255, 255, 0.06);
-    --bg-glass: rgba(0, 0, 0, 0.75);
-
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    --text-on-primary: #ffffff;
-
-    --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-default: rgba(255, 255, 255, 0.15);
-    --border-card: rgba(255, 255, 255, 0.35);
-    --border-glass: rgba(255, 255, 255, 0.15);
-
-    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.7), 0 2px 4px -2px rgba(0, 0, 0, 0.7);
-    --shadow-card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.8), 0 4px 6px -4px rgba(0, 0, 0, 0.8);
-    --shadow-elevated: 0 20px 25px -5px rgba(0, 0, 0, 0.8), 0 8px 10px -6px rgba(0, 0, 0, 0.8);
-    --shadow-nav: 0 -4px 6px -1px rgba(0, 0, 0, 0.6);
-}
-
-/* =========================================================
-   RESET & BASE
-   ========================================================= */
-*,
-*::before,
-*::after {
+/* RESET & BASE */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 html {
-    scroll-behavior: smooth;
-    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth; /* Hỗ trợ cuộn mượt bằng CSS (phòng hờ) */
 }
 
 body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: var(--bg-body);
-    color: var(--text-primary);
-    min-height: 100vh;
-    min-height: 100dvh;
-    line-height: 1.6;
+    font-family: 'Inter', sans-serif;
+    background-color: #0a0a0a; /* Background đen nhám */
+    color: #ffffff;
     overflow-x: hidden;
-    position: relative;
-    transition: background-color var(--transition-theme), color var(--transition-theme);
+    line-height: 1.6;
 }
 
-/* =========================================================
-   MAIN APP CONTAINER
-   ========================================================= */
-.app {
-    position: relative;
-    z-index: 1;
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 0 16px;
-    padding-bottom: calc(var(--nav-height) + 20px);
-}
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-.header {
-    text-align: center;
-    padding: 16px 16px;
-    position: relative;
-}
-
-.header-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.header h1 {
-    font-size: clamp(20px, 5vw, 24px);
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    line-height: 1.3;
-    transition: color var(--transition-theme);
-}
-
-.header h1 .logo-icon {
-    font-size: 0.9em;
-}
-
-.header h1 .title-text {
-    color: var(--text-primary);
-}
-
-.header p {
-    font-size: clamp(11px, 2.8vw, 13px);
-    color: var(--text-secondary);
-    margin-top: 4px;
-    letter-spacing: 0.2px;
-    transition: color var(--transition-theme);
-}
-
-/* --- Theme Toggle Button --- */
-.theme-toggle-btn {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-}
-
-/* =========================================================
-   GAME HUB (LANDING PAGE)
-   ========================================================= */
-.hub-app {
-    padding-bottom: 40px;
-}
-
-.hub-header {
-    margin-bottom: 20px;
-}
-
+/* =========================================
+   SECTION 1: HERO BANNER (100vh)
+   ========================================= */
 .hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Bắt buộc 100vh để chiếm trọn màn hình ban đầu */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Video Background Full Screen */
+.video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
+/* Lớp phủ đen/xám tối bán trong suốt */
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); 
+    z-index: -1;
+}
+
+/* Nội dung trung tâm */
+.hero-content {
     text-align: center;
-    padding: 30px 20px 40px;
+    padding: 0 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 800px;
 }
 
-.hero-title {
-    font-size: 28px;
-    font-weight: 900;
-    color: var(--text-primary);
-    margin-bottom: 12px;
-    background: var(--gradient-primary);
+.slogan-main {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #ffffff;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+    letter-spacing: -0.5px;
+    /* Hiệu ứng text gradient sang trọng */
+    background: linear-gradient(to bottom right, #ffffff, #a1a1aa);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    line-height: 1.2;
 }
 
-.hero-subtitle {
-    font-size: 15px;
-    color: var(--text-secondary);
-    max-width: 400px;
-    line-height: 1.5;
+.slogan-sub {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #d4d4d8;
+    margin-bottom: 40px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
+/* Nút CTA sang trọng */
+.cta-btn {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    padding: 14px 32px;
+    font-size: 1.1rem;
+    font-family: inherit;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255,255,255,0.1);
+}
+
+.cta-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(4px); /* Hiệu ứng lún xuống nhẹ */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255,255,255,0.2);
+}
+
+/* Icon mũi tên nảy (Bouncing Arrow) */
+.icon-arrow {
+    width: 20px;
+    height: 20px;
+    animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(5px);
+    }
+    60% {
+        transform: translateY(3px);
+    }
+}
+
+/* =========================================
+   SECTION 2: GAME GRID (Danh sách trò chơi)
+   ========================================= */
+.games-section {
+    min-height: 100vh; /* Chiều cao tự động, tối thiểu 100vh */
+    background-color: #0a0a0a;
+    padding: 100px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.container {
+    max-width: 1100px;
+    width: 100%;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 60px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Lưới hiển thị Card */
 .game-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 0 16px;
-    max-width: 600px;
-    margin: 0 auto;
+    gap: 30px;
 }
 
 @media (min-width: 768px) {
@@ -242,121 +172,124 @@ body {
     }
 }
 
+@media (min-width: 1024px) {
+    .game-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Game Card Thiết Kế */
 .game-card {
-    position: relative;
+    background: #121212;
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid #27272a;
     display: flex;
     flex-direction: column;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border-card);
-    border-radius: var(--radius-xl);
-    padding: 24px;
-    text-decoration: none;
-    color: inherit;
-    transition: transform var(--bounce), box-shadow var(--bounce), background-color var(--transition-theme), border-color var(--transition-theme);
+    justify-content: space-between;
+    min-height: 240px;
+    transition: all 0.4s ease;
+    position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 
-.game-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-card-hover);
+.card-inner {
+    position: relative;
+    z-index: 2;
 }
 
-.game-card:active {
-    transform: scale(0.97);
-}
-
-.disabled-card {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.disabled-card:hover {
-    transform: none;
-    box-shadow: none;
-}
-
-.disabled-card:active {
-    transform: none;
-}
-
-.badge-coming-soon {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: var(--bg-hover);
-    color: var(--text-secondary);
-    padding: 4px 10px;
-    border-radius: var(--radius-pill);
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border: 1px solid var(--border-subtle);
-}
-
-.game-icon-wrapper {
-    width: 56px;
-    height: 56px;
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    margin-bottom: 16px;
-    background: var(--bg-hover);
-}
-
-.tienlen-icon {
-    background: rgba(var(--blue-rgb), 0.1);
-    color: var(--blue);
-}
-
-.baicao-icon {
-    background: rgba(var(--yellow-rgb), 0.1);
-    color: var(--yellow);
-}
-
-.phom-icon {
-    background: rgba(var(--green-rgb), 0.1);
-    color: var(--green);
-}
-
-.game-title {
-    font-size: 18px;
+.game-name {
+    font-size: 1.6rem;
     font-weight: 800;
-    color: var(--text-primary);
+    color: #f4f4f5;
     margin-bottom: 8px;
 }
 
-.game-desc {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    margin-bottom: 24px;
-    flex-grow: 1;
+.game-status {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
 }
 
-.game-action {
+.status-ready {
+    color: #10b981; /* Xanh lá */
+}
+
+.status-soon {
+    color: #71717a; /* Xám */
+}
+
+.card-action {
     margin-top: auto;
+    position: relative;
+    z-index: 2;
 }
 
-.btn-small {
-    padding: 10px 16px;
-    font-size: 13px;
-    min-height: unset;
+/* Nút Vào bàn (Nổi bật) */
+.btn-play {
+    display: block;
     width: 100%;
-}
-
-.disabled-btn {
-    background: var(--bg-input);
-    color: var(--text-muted);
-    pointer-events: none;
-}
-
-.hub-footer {
     text-align: center;
-    margin-top: 40px;
-    padding: 20px;
-    font-size: 12px;
-    color: var(--text-muted);
+    background: linear-gradient(135deg, #d97706 0%, #ea580c 100%);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);
+}
+
+/* Trạng thái Thẻ Sẵn sàng */
+.game-card.ready {
+    border-top: 3px solid #d97706; /* Nhấn màu nổi bật */
+}
+
+.game-card.ready:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    border-color: #3f3f46;
+}
+
+.game-card.ready:hover .btn-play {
+    background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+    box-shadow: 0 6px 20px rgba(234, 88, 12, 0.5);
+}
+
+/* Trạng thái Thẻ Coming Soon */
+.game-card.coming-soon {
+    opacity: 0.5;
+    pointer-events: none; /* Không thể bấm vào */
+    user-select: none;
+}
+
+.btn-disabled {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: #27272a;
+    color: #52525b;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    border: 1px solid #3f3f46;
+}
+
+/* RESPONSIVE HERO CHO MOBILE */
+@media (max-width: 600px) {
+    .slogan-main {
+        font-size: 2.5rem;
+    }
+    .slogan-sub {
+        font-size: 1.1rem;
+    }
+    .section-title {
+        font-size: 2rem;
+    }
 }

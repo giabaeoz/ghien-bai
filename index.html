@@ -1,102 +1,83 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description"
-        content="Board Game Score Hub — Cổng ghi điểm trò chơi đa năng, thông minh. Nhanh gọn, chính xác, không cần giấy bút.">
-    <meta name="theme-color" content="#f8f9fa">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <title>Ghiền bài - Game Hub</title>
-    <!-- Google Fonts: Roboto -->
+    <meta name="description" content="Cổng Game Thông Minh — Trải nghiệm đỉnh cao, cuộc vui trọn vẹn.">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Game Hub - Cổng Game Thông Minh</title>
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style-index.css">
 </head>
-
 <body>
-    <main class="app hub-app">
+    <!-- SECTION 1: HERO BANNER -->
+    <section id="hero" class="hero-section">
+        <!-- Video Background -->
+        <video class="video-bg" src="images/video-background.mp4" autoplay loop muted playsinline></video>
+        
+        <!-- Overlay -->
+        <div class="video-overlay"></div>
+        
+        <!-- Center Content -->
+        <div class="hero-content">
+            <h1 class="slogan-main">Cổng Game Thông Minh</h1>
+            <p class="slogan-sub">Trải nghiệm đỉnh cao - Cuộc vui trọn vẹn</p>
+            
+            <button id="btnScrollDown" class="cta-btn" aria-label="Xem trò chơi">
+                Xem trò chơi
+                <svg class="icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <polyline points="19 12 12 19 5 12"></polyline>
+                </svg>
+            </button>
+        </div>
+    </section>
 
-        <!-- ===== HEADER ===== -->
-        <header class="header hub-header">
-            <div class="header-row">
-                <h1>
-                    <span class="logo-icon">🎮</span>
-                    <span class="title-text">Ghiền bài</span>
-                </h1>
-                <button id="themeToggleHub" class="theme-toggle-btn" aria-label="Đổi theme">
-                    <span class="theme-icon">🌙</span>
-                </button>
-            </div>
-        </header>
+    <!-- SECTION 2: GAME GRID -->
+    <section id="game-list" class="games-section">
+        <div class="container">
+            <h2 class="section-title">Danh sách trò chơi</h2>
+            
+            <div class="game-grid">
+                <!-- Thẻ 1: Tiến Lên Score (Sẵn sàng) -->
+                <div class="game-card ready">
+                    <div class="card-inner">
+                        <h3 class="game-name">Tiến Lên Score</h3>
+                        <p class="game-status status-ready">Sẵn sàng</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="html/tienlen.html" class="btn-play">Vào bàn</a>
+                    </div>
+                </div>
 
-        <!-- ===== HERO SECTION ===== -->
-        <section class="hero-section">
-            <h2 class="hero-title">Board Game Score Hub</h2>
-            <p class="hero-subtitle">Cổng ghi điểm thông minh, nhanh gọn, chính xác. Tạm biệt giấy bút!</p>
-        </section>
+                <!-- Thẻ 2: Phỏm (Coming Soon) -->
+                <div class="game-card coming-soon">
+                    <div class="card-inner">
+                        <h3 class="game-name">Phỏm</h3>
+                        <p class="game-status status-soon">Coming Soon</p>
+                    </div>
+                    <div class="card-action">
+                        <span class="btn-disabled">Sắp ra mắt</span>
+                    </div>
+                </div>
 
-        <!-- ===== GAME GRID ===== -->
-        <section class="game-grid">
-
-            <!-- Tien Len (Active) -->
-            <a href="html/tienlen.html" class="game-card">
-                <div class="game-icon-wrapper tienlen-icon">
-                    <span class="game-icon">♠️</span>
-                </div>
-                <div class="game-info">
-                    <h3 class="game-title">Tiến Lên</h3>
-                    <p class="game-desc">Ghi điểm, xếp hạng, tính heo, chặt chồng cực chuẩn và hoàn toàn tự động.</p>
-                </div>
-                <div class="game-action">
-                    <span class="btn primary-btn btn-small">Chơi ngay</span>
-                </div>
-            </a>
-
-            <!-- Bai Cao (Coming Soon) -->
-            <div class="game-card disabled-card">
-                <div class="badge-coming-soon">Sắp ra mắt</div>
-                <div class="game-icon-wrapper baicao-icon">
-                    <span class="game-icon">🎰</span>
-                </div>
-                <div class="game-info">
-                    <h3 class="game-title">Bài Cào</h3>
-                    <p class="game-desc">Tính cào rùa, làm cái, xét điểm nhanh như chớp. Phù hợp cho nhóm đông người.
-                    </p>
-                </div>
-                <div class="game-action">
-                    <span class="btn disabled-btn btn-small">Đang phát triển</span>
-                </div>
-            </div>
-
-            <!-- Phom (Coming Soon) -->
-            <div class="game-card disabled-card">
-                <div class="badge-coming-soon">Sắp ra mắt</div>
-                <div class="game-icon-wrapper phom-icon">
-                    <span class="game-icon">🎴</span>
-                </div>
-                <div class="game-info">
-                    <h3 class="game-title">Xì dách</h3>
-                    <p class="game-desc">Ghi chép quắc, 21, xì bàn,... tự động. Không lo tính lộn tiền.</p>
-                </div>
-                <div class="game-action">
-                    <span class="btn disabled-btn btn-small">Đang phát triển</span>
+                <!-- Thẻ 3: Bài Cào (Coming Soon) -->
+                <div class="game-card coming-soon">
+                    <div class="card-inner">
+                        <h3 class="game-name">Bài Cào</h3>
+                        <p class="game-status status-soon">Coming Soon</p>
+                    </div>
+                    <div class="card-action">
+                        <span class="btn-disabled">Sắp ra mắt</span>
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-        </section>
-
-        <!-- ===== FOOTER ===== -->
-        <footer class="hub-footer">
-            <p>&copy; 2026 Ghiền Bài. Tất cả quyền được bảo lưu.</p>
-        </footer>
-
-    </main>
-
-    <!-- ===== SCRIPTS ===== -->
     <script src="js/script-index.js"></script>
 </body>
-
 </html>
