@@ -58,6 +58,7 @@ body {
     letter-spacing: -0.5px;
     background: linear-gradient(135deg, #38bdf8, #2563eb);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     text-transform: uppercase;
 }
@@ -117,6 +118,7 @@ body {
     letter-spacing: -0.5px;
     background: linear-gradient(to bottom right, #ffffff, #93c5fd);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     white-space: nowrap;
 }
@@ -402,6 +404,7 @@ body {
     margin-bottom: 15px;
     background: linear-gradient(135deg, #38bdf8, #2563eb);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 

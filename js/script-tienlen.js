@@ -52,13 +52,13 @@ const rottenVictimSelect = document.getElementById("rottenVictimSelect");
 const rottenBlackInput = document.getElementById("rottenBlackInput");
 const rottenRedInput = document.getElementById("rottenRedInput");
 const rottenTriplePairInput = document.getElementById("rottenTriplePairInput");
+const rottenFourKindInput = document.getElementById("rottenFourKindInput");
 const addRottenPigBtn = document.getElementById("addRottenPigBtn");
 const rottenPigList = document.getElementById("rottenPigList");
 
 // === DOM REFERENCES — Stack Actions ===
 const stackerSelect = document.getElementById("stackerSelect");
 const stackVictimSelect = document.getElementById("stackVictimSelect");
-const stackAddSelect = document.getElementById("stackAddSelect");
 const addStackBtn = document.getElementById("addStackBtn");
 const stackList = document.getElementById("stackList");
 
@@ -277,7 +277,7 @@ function getSpecialName(type) {
 
 startBtn.addEventListener("click", startGame);
 calculateBtn.addEventListener("click", calculateRound);
-clearRoundBtn.addEventListener("click", clearCurrentRound);
+clearRoundBtn.addEventListener("click", () => clearCurrentRound(true));
 resetBtn.addEventListener("click", resetGame);
 
 addPigBtn.addEventListener("click", addPigAction);
@@ -292,12 +292,12 @@ function startGame() {
     const bet = getBetValues();
 
     if (bet.low <= 0 || bet.high <= 0 || isNaN(bet.low) || isNaN(bet.high)) {
-        alert("Vui lòng nhập mức cược hợp lệ.");
+        showMessage("Vui lòng nhập mức cược hợp lệ.", "error");
         return;
     }
 
     if (bet.high <= bet.low) {
-        alert("Điểm cao phải lớn hơn điểm thấp.");
+        showMessage("Điểm cao phải lớn hơn điểm thấp.", "error");
         return;
     }
 
@@ -579,20 +579,22 @@ function addRottenPigAction() {
     const blackCount = Number(rottenBlackInput.value) || 0;
     const redCount = Number(rottenRedInput.value) || 0;
     const triplePairCount = Number(rottenTriplePairInput.value) || 0;
+    const fourKindCount = Number(rottenFourKindInput.value) || 0;
 
     if (winnerIndex === victimIndex) {
         showMessage("Người được cộng và người bị thúi không được trùng nhau.", "error");
         return;
     }
-    const rottenPoint = blackCount * getSpecialPoint("black") + redCount * getSpecialPoint("red") + triplePairCount * getSpecialPoint("triplePair");
+    const rottenPoint = blackCount * getSpecialPoint("black") + redCount * getSpecialPoint("red") + triplePairCount * getSpecialPoint("triplePair") + fourKindCount * getSpecialPoint("fourKind");
     if (rottenPoint === 0) {
         showMessage("Vui lòng nhập ít nhất một mục bị thúi.", "error");
         return;
     }
-    rottenPigActions.push({ winnerIndex, victimIndex, blackCount, redCount, triplePairCount, rottenPoint });
+    rottenPigActions.push({ winnerIndex, victimIndex, blackCount, redCount, triplePairCount, fourKindCount, rottenPoint });
     rottenBlackInput.value = 0;
     rottenRedInput.value = 0;
     rottenTriplePairInput.value = 0;
+    rottenFourKindInput.value = 0;
     renderRottenPigList();
     showMessage("Đã thêm thúi heo.", "success");
     closeModal('modalRotten');
@@ -608,6 +610,7 @@ function renderRottenPigList() {
         if (action.blackCount > 0) details.push(`${action.blackCount} heo đen`);
         if (action.redCount > 0) details.push(`${action.redCount} heo đỏ`);
         if (action.triplePairCount > 0) details.push(`${action.triplePairCount}x3 đôi thông`);
+        if (action.fourKindCount > 0) details.push(`${action.fourKindCount} tứ quý`);
         
         const item = document.createElement("div");
         item.className = "action-item";
@@ -760,6 +763,7 @@ function calculateRound() {
             if (action.blackCount > 0) details.push(`${action.blackCount} heo đen`);
             if (action.redCount > 0) details.push(`${action.redCount} heo đỏ`);
             if (action.triplePairCount > 0) details.push(`${action.triplePairCount}x3 đôi thông`);
+            if (action.fourKindCount > 0) details.push(`${action.fourKindCount} tứ quý`);
             actionLines.push(`💩 <strong>${players[action.victimIndex]}</strong> thúi (${details.join(", ")}), đền <strong>${players[action.winnerIndex]}</strong>`);
         });
     }
@@ -1026,6 +1030,7 @@ function clearCurrentRound(showNotify = true) {
     rottenBlackInput.value = 0;
     rottenRedInput.value = 0;
     rottenTriplePairInput.value = 0;
+    rottenFourKindInput.value = 0;
 
     renderRankArea();
     renderActionLists();

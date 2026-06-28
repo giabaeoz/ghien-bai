@@ -9,10 +9,10 @@
     <meta name="theme-color" content="#f8f9fa">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>♠ Tính điểm tiến lên ♠</title>
-    <!-- Google Fonts: Roboto -->
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style-tienlen.css">
 </head>
 
@@ -242,6 +242,8 @@
                     <select id="pigTypeSelect">
                         <option value="black">Heo đen</option>
                         <option value="red">Heo đỏ</option>
+                        <option value="triplePair">3 đôi thông</option>
+                        <option value="fourKind">Tứ quý</option>
                     </select>
                 </div>
                 <button id="addPigBtn" class="btn action-btn">Thêm chặt heo</button>
@@ -267,7 +269,7 @@
                         <select id="rottenVictimSelect"></select>
                     </div>
                 </div>
-                <div class="input-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="input-grid" style="grid-template-columns: repeat(2, 1fr);">
                     <div class="form-group">
                         <label>Heo đen</label>
                         <select id="rottenBlackInput">
@@ -291,6 +293,16 @@
                     <div class="form-group">
                         <label>3 đôi thông</label>
                         <select id="rottenTriplePairInput">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tứ quý</label>
+                        <select id="rottenFourKindInput">
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
