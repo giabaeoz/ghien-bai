@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 /* ========================================================
    THEME: PREMIUM GLASSMORPHISM & GRADIENTS
    ======================================================== */
 
 /* =========================================================
-   CSS CUSTOM PROPERTIES — LIGHT MODE (Default)
+   CSS CUSTOM PROPERTIES â€” LIGHT MODE (Default)
    ========================================================= */
 :root {
     /* === Premium Accent Colors === */
@@ -24,7 +24,7 @@
     --gradient-danger: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
     --gradient-warning: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
 
-    /* === Surfaces — Light Mode === */
+    /* === Surfaces â€” Light Mode === */
     --bg-body: #f4f6f9;
     --bg-card: #ffffff;
     --bg-input: #f8fafc;
@@ -32,19 +32,19 @@
     --bg-hover: rgba(0, 0, 0, 0.04);
     --bg-glass: rgba(255, 255, 255, 0.85);
 
-    /* === Text — Light Mode === */
+    /* === Text â€” Light Mode === */
     --text-primary: #0f172a;
     --text-secondary: #475569;
     --text-muted: #94a3b8;
     --text-on-primary: #ffffff;
 
-    /* === Borders — Light Mode === */
+    /* === Borders â€” Light Mode === */
     --border-subtle: #e2e8f0;
     --border-default: #cbd5e1;
     --border-card: #94a3b8;
     --border-glass: rgba(255, 255, 255, 0.6);
 
-    /* === Shadows — Light Mode (Multi-layered) === */
+    /* === Shadows â€” Light Mode (Multi-layered) === */
     --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
     --shadow-card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
     --shadow-elevated: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
@@ -67,7 +67,7 @@
 }
 
 /* =========================================================
-   CSS CUSTOM PROPERTIES — DARK MODE
+   CSS CUSTOM PROPERTIES â€” DARK MODE
    ========================================================= */
 [data-theme="dark"] {
     --bg-body: #000000;
@@ -239,7 +239,7 @@ body {
 }
 
 /* =========================================================
-   CARDS — Material Elevation
+   CARDS â€” Material Elevation
    ========================================================= */
 .card {
     background: var(--bg-card);
@@ -300,7 +300,7 @@ body {
 }
 
 /* =========================================================
-   FORM CONTROLS — Clean & Minimal
+   FORM CONTROLS â€” Clean & Minimal
    ========================================================= */
 .form-group {
     display: flex;
@@ -369,7 +369,7 @@ input::placeholder {
 }
 
 /* =========================================================
-   BUTTON SYSTEM — Material Flat Buttons
+   BUTTON SYSTEM â€” Material Flat Buttons
    ========================================================= */
 .btn {
     width: 100%;
@@ -398,7 +398,7 @@ input::placeholder {
     opacity: 0.85;
 }
 
-/* Main Button — Premium Gradient */
+/* Main Button â€” Premium Gradient */
 .main-btn {
     background: var(--gradient-primary);
     color: #fff;
@@ -415,7 +415,7 @@ input::placeholder {
     transform: translateY(0) scale(0.98);
 }
 
-/* Action Button — Success Gradient */
+/* Action Button â€” Success Gradient */
 .action-btn {
     background: var(--gradient-success);
     color: #fff;
@@ -437,7 +437,7 @@ input::placeholder {
     transform: translateY(0) scale(0.98);
 }
 
-/* Light Button — Ghost */
+/* Light Button â€” Ghost */
 .light-btn {
     background: var(--bg-hover);
     color: var(--text-secondary);
@@ -455,7 +455,7 @@ input::placeholder {
     background: rgba(255, 255, 255, 0.08);
 }
 
-/* Warning Button — Gradient */
+/* Warning Button â€” Gradient */
 .warning-btn {
     background: var(--gradient-warning);
     color: #fff;
@@ -473,7 +473,7 @@ input::placeholder {
     transform: translateY(0) scale(0.98);
 }
 
-/* Danger Button — Gradient */
+/* Danger Button â€” Gradient */
 .danger-btn {
     background: var(--gradient-danger);
     color: #fff;
@@ -491,7 +491,7 @@ input::placeholder {
 }
 
 /* =========================================================
-   BOTTOM NAVIGATION — Material Bottom Nav
+   BOTTOM NAVIGATION â€” Material Bottom Nav
    ========================================================= */
 .bottom-nav {
     position: fixed;
@@ -573,7 +573,7 @@ input::placeholder {
     transform: scale(1.1);
 }
 
-/* Active indicator — Material style */
+/* Active indicator â€” Material style */
 .nav-tab::before {
     content: '';
     position: absolute;
@@ -741,7 +741,7 @@ input::placeholder {
 }
 
 /* =========================================================
-   RANK AREA — 1 Player Per Row, Mobile-Optimized
+   RANK AREA â€” 1 Player Per Row, Mobile-Optimized
    ========================================================= */
 .hint {
     color: var(--text-secondary);
@@ -855,9 +855,9 @@ input::placeholder {
     transform: scale(0.96);
 }
 
-/* --- Active States — Material Tinted Fill --- */
+/* --- Active States â€” Material Tinted Fill --- */
 
-/* Nhất, Nhì, Ba → Google Green tint */
+/* Nháº¥t, NhĂ¬, Ba â†’ Google Green tint */
 .rank-btn.active {
     background: rgba(var(--green-rgb), 0.10);
     color: var(--green);
@@ -869,7 +869,7 @@ input::placeholder {
     background: rgba(var(--green-rgb), 0.15);
 }
 
-/* Bị Giết → Google Red tint */
+/* Bá»‹ Giáº¿t â†’ Google Red tint */
 .bi-giet-btn.active {
     background: rgba(var(--red-rgb), 0.10);
     color: var(--red);
@@ -881,7 +881,7 @@ input::placeholder {
     background: rgba(var(--red-rgb), 0.15);
 }
 
-/* Hòa → Google Blue tint */
+/* HĂ²a â†’ Google Blue tint */
 .hoa-btn.active {
     background: rgba(var(--blue-rgb), 0.08);
     color: var(--blue);
@@ -893,7 +893,7 @@ input::placeholder {
     background: rgba(var(--blue-rgb), 0.15);
 }
 
-/* Tới trắng — subtle yellow */
+/* Tá»›i tráº¯ng â€” subtle yellow */
 .toi-trang-btn {
     border-color: var(--border-default);
     color: var(--text-muted);
@@ -905,7 +905,7 @@ input::placeholder {
     background: rgba(var(--yellow-rgb), 0.04);
 }
 
-/* Tới trắng Active — Google Yellow tint */
+/* Tá»›i tráº¯ng Active â€” Google Yellow tint */
 .toi-trang-btn.active-gold {
     background: rgba(var(--yellow-rgb), 0.12);
     color: #e37400;
@@ -969,7 +969,7 @@ input::placeholder {
 }
 
 .extra-box>summary::after {
-    content: "▼";
+    content: "â–¼";
     margin-left: auto;
     font-size: 10px;
     color: var(--text-muted);
@@ -1023,7 +1023,7 @@ input::placeholder {
 }
 
 .mini-box[open] summary::after {
-    content: "−";
+    content: "âˆ’";
     transform: rotate(180deg);
 }
 
@@ -1600,7 +1600,7 @@ input::placeholder {
 }
 
 /* =========================================================
-   RESPONSIVE DESIGN — Mobile First
+   RESPONSIVE DESIGN â€” Mobile First
    ========================================================= */
 
 /* ---- Extremely small phones (<360px) ---- */
@@ -2187,4 +2187,3 @@ input::placeholder {
 .remove-btn:hover {
     background: var(--red);
     color: white;
-}

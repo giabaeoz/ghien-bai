@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description"
+        content="Tiến Lên Score — Ứng dụng tính điểm Tiến Lên miền Nam nhanh, chính xác. Giao diện Material Design.">
+    <meta name="theme-color" content="#f8f9fa">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>♠ Ghiền bài ♠</title>
+    <!-- Google Fonts: Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style-tienlen.css">
+</head>
+
+<body>
+
+    <!-- ===== TOAST NOTIFICATION CONTAINER ===== -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- ===== STICKY MINI SCOREBOARD ===== -->
+    <div id="miniScoreboard" class="mini-scoreboard hidden-mini">
+        <div class="mini-score-inner" id="miniScoreInner"></div>
+    </div>
+
+    <main class="app">
+
+        <!-- ===== HEADER ===== -->
+        <header class="header">
+            <div class="header-row">
+                <h1>
+                    <span class="logo-icon">♠️</span>
+                    <span class="title-text">Ghiền bài</span>
+                    <span class="logo-icon">♥️</span>
+                </h1>
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Đổi theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+            <p>Tính điểm lẹ · Chính xác · Khỏi đánh lộn</p>
+        </header>
+
+        <!-- ============================================
+         TAB 1: THIẾT LẬP BÀN CHƠI
+         ============================================ -->
+        <div id="tabSetup" class="tab-panel active">
+            <section class="card">
+                <h2 class="card-title">
+                    <span class="icon">♦️</span>
+                    Thiết lập bàn chơi
+                    <span class="icon">♣️</span>
+                </h2>
+
+                <!-- Mức cược -->
+                <div class="form-group">
+                    <label>Mức cược</label>
+                    <select id="betSelect">
+                        <option value="3-6">3 - 6</option>
+                        <option value="4-8">4 - 8</option>
+                        <option value="5-10">5 - 10</option>
+                        <option value="10-20">10 - 20</option>
+                        <option value="20-40">20 - 40</option>
+                        <option value="custom">Tùy chỉnh</option>
+                    </select>
+                </div>
+
+                <!-- Custom bet inputs -->
+                <div id="customBetBox" class="custom-bet-box hidden">
+                    <div class="input-grid">
+                        <div class="form-group">
+                            <label>Điểm thấp</label>
+                            <input type="number" id="lowBetInput" placeholder="Ví dụ: 5">
+                        </div>
+                        <div class="form-group">
+                            <label>Điểm cao</label>
+                            <input type="number" id="highBetInput" placeholder="Ví dụ: 10">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hệ số phạt -->
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label>Phạt Tới trắng</label>
+                        <select id="toiTrangMultiplierSelect">
+                            <option value="1">Nhân 1</option>
+                            <option value="2" selected>Nhân 2</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Phạt Giết ngộp</label>
+                        <select id="gietMultiplierSelect">
+                            <option value="1">Nhân 1</option>
+                            <option value="2" selected>Nhân 2</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tên người chơi -->
+                <div class="section-label">
+                    <span class="icon">👥</span> Tên người chơi
+                </div>
+                <div class="player-inputs">
+                    <div class="form-group">
+                        <label>Người chơi 1</label>
+                        <input type="text" id="player1" placeholder="Tên người chơi 1">
+                    </div>
+                    <div class="form-group">
+                        <label>Người chơi 2</label>
+                        <input type="text" id="player2" placeholder="Tên người chơi 2">
+                    </div>
+                    <div class="form-group">
+                        <label>Người chơi 3</label>
+                        <input type="text" id="player3" placeholder="Tên người chơi 3">
+                    </div>
+                    <div class="form-group">
+                        <label>Người chơi 4</label>
+                        <input type="text" id="player4" placeholder="Tên người chơi 4">
+                    </div>
+                </div>
+
+                <button id="startBtn" class="btn main-btn">🃏 Vào Bàn</button>
+            </section>
+        </div>
+
+        <!-- ============================================
+         TAB 2: GHI ĐIỂM & CHẶT CHÉM
+         ============================================ -->
+        <div id="tabGame" class="tab-panel">
+
+            <!-- Bảng tổng điểm -->
+            <section class="card" id="scoreSection">
+                <div class="score-header">
+                    <h2 class="card-title">
+                        <span class="icon">🏆</span> Bảng Tổng Điểm
+                    </h2>
+                    <div class="score-header-actions" style="display: flex; gap: 8px; align-items: center;">
+                        <span id="currentBetText" class="bet-badge"></span>
+                        <button class="icon-btn settings-btn" onclick="openModal('modalSettings')"
+                            aria-label="Cài đặt điểm"
+                            style="background:none;border:none;font-size:20px;cursor:pointer;">⚙️</button>
+                    </div>
+                </div>
+                <div id="scoreBoard" class="score-board"></div>
+                <div class="total-score">
+                    Quỹ bàn (Check lỗi): <span id="totalScoreText">0</span>
+                </div>
+            </section>
+
+            <!-- Chọn thứ hạng -->
+            <section class="card" id="gameSection">
+                <h2 class="card-title">
+                    <span class="icon">🎯</span> Chọn kết quả
+                </h2>
+                <div id="rankArea" class="rank-area"></div>
+
+                <!-- Tùy chọn chặt chém (Quick Actions) -->
+                <div class="quick-actions-row">
+                    <button type="button" class="btn quick-btn" onclick="openModal('modalCut')">🗡️ Chặt</button>
+                    <button type="button" class="btn quick-btn" onclick="openModal('modalRotten')">💩 Thúi</button>
+                    <button type="button" class="btn quick-btn" onclick="openModal('modalStack')">⚡ Chồng</button>
+                </div>
+
+                <div class="action-lists-container">
+                    <div id="pigList" class="action-list"></div>
+                    <div id="rottenPigList" class="action-list"></div>
+                    <div id="stackList" class="action-list"></div>
+                </div>
+
+                <!-- Nút hành động chính -->
+                <div class="main-actions">
+                    <button id="calculateBtn" class="btn main-btn">✅ Chốt Bàn Này</button>
+                    <button id="clearRoundBtn" class="btn light-btn">🔄 Xóa làm lại</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============================================
+         TAB 3: LỊCH SỬ & THỐNG KÊ
+         ============================================ -->
+        <div id="tabHistory" class="tab-panel">
+            <section class="card">
+                <h2 class="card-title">
+                    <span class="icon">📊</span> Lịch sử & Thống kê
+                </h2>
+
+                <!-- Stats summary -->
+                <div id="statsSummary" class="stats-summary">
+                    <div class="stat-item">
+                        <div class="stat-value" id="statsRounds">0</div>
+                        <div class="stat-label">Ván đã chơi</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statsTotal">0</div>
+                        <div class="stat-label">Quỹ bàn</div>
+                    </div>
+                </div>
+
+                <div id="historyList"></div>
+            </section>
+
+            <!-- Nút kết thúc ván -->
+            <button id="resetBtn" class="btn danger-btn">⚠️ Kết thúc — Chơi lại từ đầu</button>
+        </div>
+
+    </main>
+
+    <!-- ============================================
+         MODALS
+         ============================================ -->
+    <!-- Modal Chặt Heo -->
+    <div id="modalCut" class="modal-overlay" onclick="closeModalOutside(event, 'modalCut')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🗡️ Chặt heo</h3>
+                <button class="close-modal-btn" onclick="closeModal('modalCut')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Người chặt</label>
+                    <select id="cutterSelect"></select>
+                </div>
+                <div class="form-group">
+                    <label>Người bị chặt</label>
+                    <select id="victimSelect"></select>
+                </div>
+                <div class="form-group">
+                    <label>Loại heo bị chặt</label>
+                    <select id="pigTypeSelect">
+                        <option value="black">Heo đen</option>
+                        <option value="red">Heo đỏ</option>
+                    </select>
+                </div>
+                <button id="addPigBtn" class="btn action-btn">Thêm chặt heo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Thúi Heo -->
+    <div id="modalRotten" class="modal-overlay" onclick="closeModalOutside(event, 'modalRotten')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>💩 Thúi heo</h3>
+                <button class="close-modal-btn" onclick="closeModal('modalRotten')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label>Người ăn tiền</label>
+                        <select id="rottenWinnerSelect"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Người thúi</label>
+                        <select id="rottenVictimSelect"></select>
+                    </div>
+                </div>
+                <div class="input-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="form-group">
+                        <label>Heo đen</label>
+                        <select id="rottenBlackInput">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Heo đỏ</label>
+                        <select id="rottenRedInput">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>3 đôi thông</label>
+                        <select id="rottenTriplePairInput">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="addRottenPigBtn" class="btn action-btn">Thêm thúi heo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Chặt Chồng -->
+    <div id="modalStack" class="modal-overlay" onclick="closeModalOutside(event, 'modalStack')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚡ Chặt chồng</h3>
+                <button class="close-modal-btn" onclick="closeModal('modalStack')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Người chồng</label>
+                    <select id="stackerSelect"></select>
+                </div>
+                <div class="form-group">
+                    <label>Người bị chồng (nạn nhân cũ)</label>
+                    <select id="stackVictimSelect"></select>
+                </div>
+                <button id="addStackBtn" class="btn action-btn">Thêm chặt chồng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Cài Đặt (Đổi cược, Cộng trừ điểm) -->
+    <div id="modalSettings" class="modal-overlay" onclick="closeModalOutside(event, 'modalSettings')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚙️ Tùy chỉnh ván đấu</h3>
+                <button class="close-modal-btn" onclick="closeModal('modalSettings')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Thay đổi mức cược -->
+                <div class="bet-changer-title">💰 Thay đổi mức cược</div>
+                <div class="bet-changer-grid">
+                    <div class="form-group">
+                        <select id="ingameBetSelect">
+                            <option value="3-6">3 - 6</option>
+                            <option value="4-8">4 - 8</option>
+                            <option value="5-10">5 - 10</option>
+                            <option value="10-20">10 - 20</option>
+                            <option value="20-40">20 - 40</option>
+                            <option value="custom">Tùy chỉnh</option>
+                        </select>
+                    </div>
+                    <button id="ingameBetApplyBtn" class="bet-change-btn">Áp dụng</button>
+                </div>
+                <div id="ingameCustomBetBox" class="custom-bet-box hidden">
+                    <div class="input-grid">
+                        <div class="form-group">
+                            <label>Điểm thấp</label>
+                            <input type="number" id="ingameLowBet" placeholder="Ví dụ: 5">
+                        </div>
+                        <div class="form-group">
+                            <label>Điểm cao</label>
+                            <input type="number" id="ingameHighBet" placeholder="Ví dụ: 10">
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="divider">
+
+                <!-- Cộng/Trừ điểm thủ công -->
+                <div class="bet-changer-title">🔢 Cộng/Trừ điểm thủ công</div>
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label>Người chơi</label>
+                        <select id="manualPlayerSelect"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Số điểm (+ hoặc -)</label>
+                        <input type="number" id="manualPointInput" placeholder="VD: 5 hoặc -5">
+                    </div>
+                </div>
+                <button id="manualAdjustBtn" class="btn action-btn">Cập nhật điểm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== BOTTOM NAVIGATION ===== -->
+    <nav id="bottomNav" class="bottom-nav">
+        <div class="nav-inner">
+            <button class="nav-tab" data-tab="tabSetup" id="navSetup">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-label">Thiết lập</span>
+            </button>
+            <button class="nav-tab active" data-tab="tabGame" id="navGame">
+                <span class="nav-icon">🎮</span>
+                <span class="nav-label">Ghi điểm</span>
+            </button>
+            <button class="nav-tab" data-tab="tabHistory" id="navHistory">
+                <span class="nav-icon">📊</span>
+                <span class="nav-label">Lịch sử</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hidden message box for backwards compatibility -->
+    <div id="messageBox" class="message-box"></div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script src="../js/script-tienlen.js"></script>
+</body>
+
+</html>
