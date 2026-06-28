@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description"
-        content="Tiến Lên Score — Ứng dụng tính điểm Tiến Lên miền Nam nhanh, chính xác. Giao diện Casino Royale sang trọng.">
-    <meta name="theme-color" content="#080e0b">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>♠ Tiến Lên Score — Casino Royale</title>
-    <!-- Google Fonts: Inter -->
+        content="Tiến Lên Score — Ứng dụng tính điểm Tiến Lên miền Nam nhanh, chính xác. Giao diện Material Design.">
+    <meta name="theme-color" content="#f8f9fa">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>♠ Tiến Lên Score</title>
+    <!-- Google Fonts: Roboto -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -25,11 +25,16 @@
 
         <!-- ===== HEADER ===== -->
         <header class="header">
-            <h1>
-                <span class="logo-icon">♠️</span>
-                <span class="title-text">Tiến Lên Score</span>
-                <span class="logo-icon">♥️</span>
-            </h1>
+            <div class="header-row">
+                <h1>
+                    <span class="logo-icon">♠️</span>
+                    <span class="title-text">Tiến Lên Score</span>
+                    <span class="logo-icon">♥️</span>
+                </h1>
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Đổi theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
             <p>Tính điểm nhanh · Chuẩn xác · Không nhầm lẫn</p>
         </header>
 

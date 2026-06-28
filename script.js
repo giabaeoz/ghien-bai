@@ -347,14 +347,16 @@ function renderRankArea() {
 
         card.innerHTML = `
             <div class="player-name">${player}</div>
-            <div class="rank-buttons">
+            <div class="rank-buttons-main">
                 <button class="rank-btn" onclick="selectRank(${index}, 'nhat')">Nhất</button>
                 <button class="rank-btn" onclick="selectRank(${index}, 'nhi')">Nhì</button>
                 <button class="rank-btn" onclick="selectRank(${index}, 'ba')">Ba</button>
                 <button class="rank-btn" onclick="selectRank(${index}, 'bet')">Bét</button>
+            </div>
+            <div class="rank-buttons-extra">
                 <button class="rank-btn bi-giet-btn" onclick="selectRank(${index}, 'bi_giet')">Bị giết</button>
                 <button class="rank-btn hoa-btn" onclick="selectRank(${index}, 'hoa')">Hòa</button>
-                <button class="rank-btn toi-trang-btn full-width" onclick="selectToiTrang(${index})">Tới trắng</button>
+                <button class="rank-btn toi-trang-btn" onclick="selectToiTrang(${index})">Tới trắng</button>
             </div>
         `;
 
@@ -444,6 +446,13 @@ function renderAllSelects() {
 // ============================================================
 
 function renderScoreBoard() {
+    // Capture old scores for animation comparison
+    const oldItems = scoreBoard.querySelectorAll(".player-score .point");
+    const oldScores = [];
+    oldItems.forEach(el => {
+        oldScores.push(parseInt(el.textContent) || 0);
+    });
+
     scoreBoard.innerHTML = "";
     players.forEach((player, index) => {
         const item = document.createElement("div");
@@ -457,6 +466,21 @@ function renderScoreBoard() {
             <div class="name">${player}</div>
             <div class="point ${colorClass}">${scores[index]}</div>
         `;
+
+        // Trigger score pop + flash animation if score changed
+        if (oldScores.length === 4 && oldScores[index] !== scores[index]) {
+            item.classList.add("score-pop");
+            if (scores[index] > oldScores[index]) {
+                item.classList.add("flash-green");
+            } else if (scores[index] < oldScores[index]) {
+                item.classList.add("flash-red");
+            }
+            // Remove animation classes after they finish
+            setTimeout(() => {
+                item.classList.remove("score-pop", "flash-green", "flash-red");
+            }, 500);
+        }
+
         scoreBoard.appendChild(item);
     });
     const totalScore = scores.reduce((sum, point) => sum + point, 0);
